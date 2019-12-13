@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="indent_page">16dp</dimen>
+
+    <dimen name="edit_radius">6dp</dimen>
+
+    <dimen name="tag_radius">6dp</dimen>
+    <dimen name="tag_padding_vertical">2dp</dimen>
+    <dimen name="tag_padding_horizontal">6dp</dimen>
+
+</resources>

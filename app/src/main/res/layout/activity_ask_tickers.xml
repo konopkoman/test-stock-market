@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="com.konopko.stocktest.ActivityAskTickers" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <mabbas007.tagsedittext.TagsEditText
+            android:id="@+id/tagsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="160dp"
+            android:layout_marginStart="@dimen/indent_page"
+            android:layout_marginEnd="@dimen/indent_page"
+            android:background="@drawable/edit_tags_background"
+            android:padding="10dp"
+            android:text="@={handler.tags}"
+            app:allowSpaceInTag="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tagsBackground="@drawable/tag_background"
+            app:tagsCloseImageRight="@drawable/ic_tag_close"
+            app:tagsTextColor="#fff" />
+
+        <TextView
+            android:id="@+id/textTagsDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="@dimen/indent_page"
+            android:layout_marginEnd="@dimen/indent_page"
+            android:gravity="start"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:text="@string/tickers_tag_list_desc"
+            app:layout_constraintTop_toBottomOf="@id/tagsEditText"/>
+
+        <Button
+            android:id="@+id/buttonNext"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/indent_page"
+            android:text="@string/button_next"
+            android:enabled="false"
+            android:onClick="@{handler::onClickNext}"
+            app:layout_constraintTop_toBottomOf="@id/textTagsDesc"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
