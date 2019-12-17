@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import timber.log.Timber;
 
 public class AdapterTickerList extends RecyclerView.Adapter<AdapterTickerList.TickerViewHolder> {
 
-    private final PublishSubject<Ticker> onClickSubject = PublishSubject.create();
+    private final PublishSubject<AdapterTickerListHolder> onClickSubject = PublishSubject.create();
     private List<AdapterTickerListHolder> list = new ArrayList<>();
 
 
@@ -41,13 +42,17 @@ public class AdapterTickerList extends RecyclerView.Adapter<AdapterTickerList.Ti
         AdapterTickerListHolder item = list.get(position);
         if (item != null) {
             holder.bind(item);
-            holder.itemView.setOnClickListener(view -> onClickSubject.onNext(item.getTicker()));
+            holder.itemView.setOnClickListener(view -> onClickSubject.onNext(item));
         }
     }
 
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public Observable<AdapterTickerListHolder> subscribeItemClick() {
+        return onClickSubject;
     }
 
     public static class TickerViewHolder extends RecyclerView.ViewHolder {

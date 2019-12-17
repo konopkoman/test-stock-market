@@ -65,12 +65,12 @@
                 style="@style/TickerTextBase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{@string/tickers_list_item_price_format(tickerCurrency, tickerPrice)}"
+                android:text="@{tickerPrice}"
                 android:visibility="@{inProgress || tickerError != null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guidelinePrice"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="1240" />
+                tools:text="1240.29" />
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -5,6 +5,7 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="page_background">@android:color/white</color>
+    <color name="page_divider">#888</color>
 
     <color name="text_default">@android:color/black</color>
     <color name="text_tag">@android:color/white</color>
