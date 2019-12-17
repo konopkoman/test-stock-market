@@ -23,10 +23,6 @@ import timber.log.Timber;
 public class ActivityAskTickers extends AppCompatActivity {
 
     private final int TAGS_MAX_LENGTH = 30;
-    private final String TAG_SEPARATOR = " "; // white space
-
-    private String text;
-
     private ActivityAskTickersBinding binding;
 
     @Override
@@ -53,49 +49,24 @@ public class ActivityAskTickers extends AppCompatActivity {
     }
 
     public void onClickNext(View view){
-        Timber.d("clickNext");
-        searchTickers(text);
+        List<String> tickers = binding.tagsEditText.getTags();
+        Timber.d("clickNext tags = %s", new Gson().toJson(tickers));
+        if (tickers.isEmpty()) return;
+        searchTickers(tickers);
         openActivityList();
+        clearTickers();
     }
 
-    public String getTags() {
-        return text;
-    }
-
-    public void setTags(String text) {
-        binding.buttonNext.setEnabled(checkTags(text));
-        this.text = text;
-        Timber.d("setTags = %s", text);
-    }
-
-    private boolean checkTags(@NonNull String text){
-        return text.contains(TAG_SEPARATOR);
-    }
-
-    @NonNull
-    private List<String> getListTickers(@NonNull String text){
-        String[] words = text.split("\\s+");
-        List<String> result = new ArrayList<>(Arrays.asList(words));
-
-        Pattern p = Pattern.compile(TAG_SEPARATOR);
-        Matcher m = p.matcher(text);
-        int count = 0;
-        while (m.find())
-            ++count;
-
-        if (count < result.size())
-            result.remove(result.size()-1);
-
-        return result;
-    }
-
-    private void searchTickers(@NonNull String text){
-        List<String> tickers = getListTickers(text);
+    private void searchTickers(@NonNull List<String> tickers){
         Timber.d("searchTickers list = %s", new Gson().toJson(tickers));
-        //todo search
+        RepositoryTicker.getInstance().findTickers(tickers);
     }
 
     private void openActivityList(){
-        //todo open
+        ActivityTickerList.open(this);
+    }
+
+    private void clearTickers(){
+        binding.tagsEditText.setTags(null);
     }
 }

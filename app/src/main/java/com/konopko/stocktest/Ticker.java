@@ -62,6 +62,11 @@ public class Ticker {
     }
 
     @Nullable
+    public String getCurrency(){
+        return tickerChart.getCurrency();
+    }
+
+    @Nullable
     public String getCompanyDesc(){
         try {
             return Objects.requireNonNull(tickerDetails.summaryProfile).longBusinessSummary;

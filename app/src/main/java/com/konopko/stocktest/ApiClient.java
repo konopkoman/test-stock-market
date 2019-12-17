@@ -18,13 +18,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     private static Retrofit retrofit = null;
-    private static int REQUEST_TIMEOUT = 60;
+    private static int REQUEST_TIMEOUT = 10;
     private static OkHttpClient okHttpClient;
 
-    public static Retrofit getClient(Context context) {
+    public static Retrofit getClient() {
 
         if (okHttpClient == null)
-            initOkHttp(context);
+            initOkHttp(App.getInstance().getApplicationContext());
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()

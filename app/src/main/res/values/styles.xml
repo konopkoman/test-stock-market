@@ -10,7 +10,15 @@
 
     <style name="Button" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/text_button</item>
+    </style>
+
+    <style name="TickerTextBase" parent="@style/TextAppearance.AppCompat.Medium">
         <item name="android:textColor">@color/text_default</item>
+    </style>
+
+    <style name="TickerTextId" parent="TickerTextBase">
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

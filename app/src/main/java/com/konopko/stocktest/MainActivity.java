@@ -1,6 +1,5 @@
 package com.konopko.stocktest;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -16,16 +15,13 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.gson.Gson;
 import com.konopko.stocktest.databinding.ActivityMainBinding;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
         chart = binding.chart;
 
         //RepositoryTicker.getInstance().addTicker("GOOGL", new Ticker(null, null));
-        RepositoryTicker.getInstance().findTickers(getApplicationContext(), new ArrayList<String>(Arrays.asList("GOOGL")));
+        RepositoryTicker.getInstance().findTickers(new ArrayList<String>(Arrays.asList("GOOGL")));
 
         Timber.d("app started");
 
-        disposable.add(RepositoryTicker.getInstance().subscribe().subscribe(map -> {
+        disposable.add(RepositoryTicker.getInstance().subscribeMapTickers().subscribe(map -> {
             for(Map.Entry<String, Ticker> entry : map.entrySet()) {
                 Timber.d("ticker name = %s, ticker data = %s", entry.getKey(), new Gson().toJson(entry.getValue()));
                 Ticker ticker = entry.getValue();

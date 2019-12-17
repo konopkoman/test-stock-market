@@ -1,7 +1,5 @@
 package com.konopko.stocktest;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -45,15 +43,21 @@ public class RepositoryTicker {
         return mapTicker.get(tickerId);
     }
 
-    public Observable<LinkedHashMap<String, Ticker>> subscribe(){
+    public Observable<LinkedHashMap<String, Ticker>> subscribeMapTickers(){
         return subject;
     }
 
-    public void findTickers(@NonNull Context context, @NonNull List<String> listTickers){
+    public void findTickers(@NonNull List<String> listTickers){
         disposable = new CompositeDisposable();
         mapTicker.clear();
 
-        ApiService apiService = ApiClient.getClient(context)
+        // fill map with tickers' ids as keys
+        for (String tickerId : listTickers)
+            mapTicker.put(tickerId, null);
+        // populate data
+        subject.onNext(mapTicker);
+
+        ApiService apiService = ApiClient.getClient()
                 .create(ApiService.class);
 
         for (String tickerId : listTickers){
@@ -69,7 +73,7 @@ public class RepositoryTicker {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(ticker -> addTicker(tickerId, ticker), e -> {
                         addTicker(tickerId, new Ticker(tickerId, e.getMessage() == null ? e.toString() : e.getMessage()));
-                        Timber.w(e,"subscribe error");
+                        Timber.w(e,"subscribeMapTickers error");
                     }));
         }
     }

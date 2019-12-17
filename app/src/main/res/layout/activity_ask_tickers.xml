@@ -25,7 +25,6 @@
             android:layout_marginEnd="@dimen/indent_page"
             android:background="@drawable/edit_tags_background"
             android:padding="10dp"
-            android:text="@={handler.tags}"
             app:allowSpaceInTag="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -55,7 +54,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="@dimen/indent_page"
             android:text="@string/button_next"
-            android:enabled="false"
+            android:enabled="true"
             android:onClick="@{handler::onClickNext}"
             app:layout_constraintTop_toBottomOf="@id/textTagsDesc"
             app:layout_constraintEnd_toEndOf="parent"/>
