@@ -42,6 +42,9 @@ public class ActivityTickerDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ticker_details);
 
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.ticker_details_title);
+
         String tickerId = getIntent().getStringExtra(Intent.EXTRA_UID);
         if (tickerId == null) {
             Timber.w("tickerId not set");

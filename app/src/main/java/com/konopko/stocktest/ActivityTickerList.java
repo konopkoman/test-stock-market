@@ -31,6 +31,10 @@ public class ActivityTickerList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ticker_list);
 
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(R.string.ticker_list_title);
+
+
         viewModel = ViewModelProviders.of(this).get(ViewModelTickerList.class);
 
         adapter = new AdapterTickerList();

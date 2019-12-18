@@ -22,8 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityTickerList" />
-        <activity android:name=".ActivityTickerDetails"/>
+        <activity
+            android:name=".ActivityTickerList"
+            android:parentActivityName=".ActivityAskTickers" />
+        <activity
+            android:name=".ActivityTickerDetails"
+            android:parentActivityName=".ActivityTickerList" />
 
     </application>
 

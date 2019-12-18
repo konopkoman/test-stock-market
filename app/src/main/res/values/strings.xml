@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">StockTest</string>
+    <string name="app_name">Stock Market</string>
+
+    <string name="ticker_list_title">Search result</string>
+    <string name="ticker_details_title">Ticker</string>
+
     <string name="tickers_list_limit_error">Only 5 tickers available</string>
     <string name="tickers_list_item_price_format">%1$s%2$s</string>
     <string name="ticker_error">Ticker is unavailable</string>
