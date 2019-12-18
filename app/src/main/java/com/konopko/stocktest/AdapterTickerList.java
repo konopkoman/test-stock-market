@@ -1,11 +1,16 @@
 package com.konopko.stocktest;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.konopko.stocktest.databinding.ListItemTickerBinding;
 
 import java.util.ArrayList;
@@ -23,6 +28,7 @@ public class AdapterTickerList extends RecyclerView.Adapter<AdapterTickerList.Ti
     private final PublishSubject<AdapterTickerListHolder> onClickSubject = PublishSubject.create();
     private List<AdapterTickerListHolder> list = new ArrayList<>();
 
+    public AdapterTickerList(){}
 
     public void setList(@NonNull  List<AdapterTickerListHolder> list){
         this.list = list;
@@ -58,10 +64,12 @@ public class AdapterTickerList extends RecyclerView.Adapter<AdapterTickerList.Ti
     public static class TickerViewHolder extends RecyclerView.ViewHolder {
 
         private ListItemTickerBinding binding;
+        private Context context;
 
-        public TickerViewHolder(ListItemTickerBinding binding) {
+        public TickerViewHolder(@NonNull ListItemTickerBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            this.context = binding.getRoot().getContext();
         }
 
         public void bind(AdapterTickerListHolder item) {
@@ -77,9 +85,33 @@ public class AdapterTickerList extends RecyclerView.Adapter<AdapterTickerList.Ti
                 else {
                     binding.setTickerCurrency(App.getCurrencySign(ticker.getCurrency()));
                     binding.setTickerPrice(String.format(Locale.getDefault(), "%.2f", ticker.getCurrentValue()));
+                    setChart(binding.chart, ticker);
                 }
             }
             binding.executePendingBindings();
+        }
+
+        private void setChart(@NonNull LineChart chart, @NonNull Ticker ticker){
+            chart.setTouchEnabled(false); // disable interactions
+            chart.getLegend().setEnabled(false); // hide legend
+            chart.setDescription(null);
+
+            LineDataSet lineDataSet = new LineDataSet(FactoryMPAndroidChart.getChartDataSetStepOne(ticker), ticker.getId());
+            lineDataSet.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            lineDataSet.setLineWidth(2f);
+            // hide circles, use dots
+            lineDataSet.setDrawCircleHole(false);
+            lineDataSet.setCircleColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            lineDataSet.setCircleRadius(1f);
+
+            chart.getXAxis().setEnabled(false);
+            chart.getAxisLeft().setEnabled(false);
+            chart.getAxisRight().setEnabled(false);
+            chart.setMaxVisibleValueCount(0); // hide labels of points
+
+            LineData data = new LineData(lineDataSet);
+            chart.setData(data);
+            chart.invalidate();
         }
     }
 }

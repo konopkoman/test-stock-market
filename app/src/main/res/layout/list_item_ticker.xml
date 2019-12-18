@@ -46,6 +46,13 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.30" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.60" />
+
             <TextView
                 android:id="@+id/textTickerId"
                 style="@style/TickerTextId"
@@ -72,6 +79,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="1240.29" />
 
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/indent_page"
+                android:visibility="@{inProgress || tickerError != null ? View.GONE : View.VISIBLE}"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guidelineChart"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:background="#eee" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,7 +99,8 @@
                 android:visibility="@{tickerError == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"

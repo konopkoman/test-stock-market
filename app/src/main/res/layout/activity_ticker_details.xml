@@ -32,16 +32,16 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:layout_margin="@dimen/indent_page"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:background="#eee" />
 
             <View
+                android:id="@+id/divider"
                 style="@style/PageDivider"
                 android:layout_width="match_parent"
+                android:layout_marginTop="30dp"
                 app:layout_constraintTop_toBottomOf="@id/chart" />
 
             <TextView
@@ -53,7 +53,7 @@
                 android:layout_marginTop="@dimen/indent_page"
                 android:text="@{tickerId}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chart"
+                app:layout_constraintTop_toBottomOf="@id/divider"
                 tools:text="GOOGL" />
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_marginEnd="@dimen/indent_page"
                 android:text="@{tickerPrice}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chart"
+                app:layout_constraintTop_toBottomOf="@id/divider"
                 tools:text="1240.29" />
 
             <TextView
