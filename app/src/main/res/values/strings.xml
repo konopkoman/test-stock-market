@@ -4,7 +4,7 @@
     <string name="ticker_list_title">Search result</string>
     <string name="ticker_details_title">Ticker</string>
 
-    <string name="tickers_list_limit_error">Only 5 tickers available</string>
+    <string name="tickers_list_error">You should enter tickers</string>
     <string name="tickers_list_item_price_format">%1$s%2$s</string>
     <string name="ticker_error">Ticker is unavailable</string>
     <string name="tickers_tag_list_desc">Type tickers such\u00A0as GOOGL or\u00A0AAPL, separated by\u00A0Enter\u00A0key</string>

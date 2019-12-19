@@ -21,9 +21,9 @@ public class ActivityTickerList extends AppCompatActivity {
     private AdapterTickerList adapter;
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    public static void open(AppCompatActivity activity){
-        Intent intent = new Intent(activity, ActivityTickerList.class);
-        activity.startActivity(intent);
+    public static void open(Context context){
+        Intent intent = new Intent(context, ActivityTickerList.class);
+        context.startActivity(intent);
     }
 
     @Override
@@ -34,22 +34,22 @@ public class ActivityTickerList extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(R.string.ticker_list_title);
 
-
         viewModel = ViewModelProviders.of(this).get(ViewModelTickerList.class);
 
         adapter = new AdapterTickerList();
         binding.listTicker.setNestedScrollingEnabled(false);
         binding.listTicker.setAdapter(adapter);
 
-        viewModel.getDataListTickerHolder().observe(this, list -> adapter.setList(list));
+        viewModel.getDataListTickerHolder().observe(this,
+                list -> adapter.setList(list));
 
-        disposable.add(adapter.subscribeItemClick().subscribe(tickerListHolder -> {
-            Ticker ticker = tickerListHolder.getTicker();
-            if (ticker != null && ticker.getError() == null)
-                ActivityTickerDetails.open(this, ticker.getId());
-            else
-                Toast.makeText(this, R.string.ticker_error, Toast.LENGTH_SHORT).show();
-        }));
+        viewModel.getDataTickerId().observe(this,
+                tickerId -> ActivityTickerDetails.open(this, tickerId));
+
+        viewModel.getDataNotification().observe(this,
+                notification -> Toast.makeText(this, notification, Toast.LENGTH_SHORT).show());
+
+        disposable.add(adapter.subscribeItemClick().subscribe(tickerListHolder -> viewModel.openTickerDetails(tickerListHolder.getTicker())));
     }
 
     @Override

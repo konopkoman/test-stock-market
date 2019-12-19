@@ -1,20 +1,18 @@
 package com.konopko.stocktest;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.os.Bundle;
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
@@ -31,10 +29,10 @@ public class ActivityTickerDetails extends AppCompatActivity {
     private ViewModelTickerDetails viewModel;
     private ActivityTickerDetailsBinding binding;
 
-    public static void open(AppCompatActivity activity, String tickerId){
-        Intent intent = new Intent(activity, ActivityTickerDetails.class);
+    public static void open(Context context, String tickerId){
+        Intent intent = new Intent(context, ActivityTickerDetails.class);
         intent.putExtra(Intent.EXTRA_UID, tickerId);
-        activity.startActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override

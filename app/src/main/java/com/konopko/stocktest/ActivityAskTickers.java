@@ -1,29 +1,22 @@
 package com.konopko.stocktest;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.konopko.stocktest.databinding.ActivityAskTickersBinding;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import timber.log.Timber;
 
 public class ActivityAskTickers extends AppCompatActivity {
 
     private final int TAGS_MAX_LENGTH = 30;
     private ActivityAskTickersBinding binding;
+    private ViewModelAskTickers viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +24,14 @@ public class ActivityAskTickers extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ask_tickers);
         binding.setHandler(this);
+
+        viewModel = ViewModelProviders.of(this).get(ViewModelAskTickers.class);
+        viewModel.getDataNext().observe(this, open -> {
+            if (open)
+                openActivityList();
+            else
+                Toast.makeText(this, R.string.tickers_list_error, Toast.LENGTH_SHORT).show();
+        });
 
         binding.tagsEditText.setMaxLines(2);
         binding.tagsEditText.setFilters(new InputFilter[] {
@@ -49,21 +50,12 @@ public class ActivityAskTickers extends AppCompatActivity {
     }
 
     public void onClickNext(View view){
-        List<String> tickers = binding.tagsEditText.getTags();
-        Timber.d("clickNext tags = %s", new Gson().toJson(tickers));
-        if (tickers.isEmpty()) return;
-        searchTickers(tickers);
-        openActivityList();
-        clearTickers();
-    }
-
-    private void searchTickers(@NonNull List<String> tickers){
-        Timber.d("searchTickers list = %s", new Gson().toJson(tickers));
-        RepositoryTicker.getInstance().findTickers(tickers);
+        viewModel.next(binding.tagsEditText.getTags());
     }
 
     private void openActivityList(){
         ActivityTickerList.open(this);
+        clearTickers();
     }
 
     private void clearTickers(){

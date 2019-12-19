@@ -1,6 +1,7 @@
 package com.konopko.stocktest;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,6 +17,13 @@ public class ViewModelTickerList extends ViewModel {
 
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<List<AdapterTickerListHolder>> dataListTickerHolder;
+    private MutableLiveData<String> dataTickerId;
+    private MutableLiveData<Integer> dataNotification;
+
+    @Override
+    protected void onCleared() {
+        disposable.dispose();
+    }
 
     public LiveData<List<AdapterTickerListHolder>> getDataListTickerHolder(){
         if (dataListTickerHolder == null){
@@ -23,6 +31,25 @@ public class ViewModelTickerList extends ViewModel {
             loadTickerList();
         }
         return dataListTickerHolder;
+    }
+
+    public LiveData<Integer> getDataNotification(){
+        if (dataNotification == null)
+            dataNotification = new MutableLiveData<>();
+        return dataNotification;
+    }
+
+    public LiveData<String> getDataTickerId(){
+        if (dataTickerId == null)
+            dataTickerId = new MutableLiveData<>();
+        return dataTickerId;
+    }
+
+    public void openTickerDetails(@Nullable Ticker ticker){
+        if (ticker != null && ticker.getError() == null)
+            dataTickerId.setValue(ticker.getId());
+        else
+            dataNotification.setValue(R.string.ticker_error);
     }
 
     private void loadTickerList(){
