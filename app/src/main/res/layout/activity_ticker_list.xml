@@ -4,24 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listTicker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/indent_page"
-        android:background="@color/page_background"
-        tools:context=".ActivityTickerList">
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/list_item_ticker" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listTicker"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_ticker"
-            tools:itemCount="3"/>
-
-    </androidx.core.widget.NestedScrollView>
 </layout>
