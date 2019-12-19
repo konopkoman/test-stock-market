@@ -15,10 +15,16 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class ViewModelTickerList extends ViewModel {
 
+    private RepositoryTicker repositoryTicker;
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<List<AdapterTickerListHolder>> dataListTickerHolder;
     private MutableLiveData<String> dataTickerId;
     private MutableLiveData<Integer> dataNotification;
+
+
+    public ViewModelTickerList(){
+        repositoryTicker = RepositoryTicker.getInstance();
+    }
 
     @Override
     protected void onCleared() {
@@ -28,7 +34,7 @@ public class ViewModelTickerList extends ViewModel {
     public LiveData<List<AdapterTickerListHolder>> getDataListTickerHolder(){
         if (dataListTickerHolder == null){
             dataListTickerHolder = new MutableLiveData<>();
-            loadTickerList();
+            loadTickerList(repositoryTicker);
         }
         return dataListTickerHolder;
     }
@@ -52,9 +58,9 @@ public class ViewModelTickerList extends ViewModel {
             dataNotification.setValue(R.string.ticker_error);
     }
 
-    private void loadTickerList(){
+    private void loadTickerList(RepositoryTicker repositoryTicker){
         disposable.add(
-                RepositoryTicker.getInstance().subscribeMapTickers().subscribe(
+                repositoryTicker.subscribeMapTickers().subscribe(
                         map -> dataListTickerHolder.setValue(getTickerListHolder(map))
                 ));
     }

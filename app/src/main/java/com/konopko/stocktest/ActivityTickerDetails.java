@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -24,10 +22,9 @@ import java.util.Locale;
 
 import timber.log.Timber;
 
-public class ActivityTickerDetails extends AppCompatActivity {
+public class ActivityTickerDetails extends ActivityBase<ActivityTickerDetailsBinding> {
 
     private ViewModelTickerDetails viewModel;
-    private ActivityTickerDetailsBinding binding;
 
     public static void open(Context context, String tickerId){
         Intent intent = new Intent(context, ActivityTickerDetails.class);
@@ -36,12 +33,18 @@ public class ActivityTickerDetails extends AppCompatActivity {
     }
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.activity_ticker_details;
+    }
+
+    @Override
+    protected String getPageTitle() {
+        return getString(R.string.ticker_details_title);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_ticker_details);
-
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(R.string.ticker_details_title);
 
         String tickerId = getIntent().getStringExtra(Intent.EXTRA_UID);
         if (tickerId == null) {

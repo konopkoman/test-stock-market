@@ -6,23 +6,29 @@ import android.text.Spanned;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.konopko.stocktest.databinding.ActivityAskTickersBinding;
 
-public class ActivityAskTickers extends AppCompatActivity {
+public class ActivityAskTickers extends ActivityBase<ActivityAskTickersBinding> {
 
     private final int TAGS_MAX_LENGTH = 30;
-    private ActivityAskTickersBinding binding;
     private ViewModelAskTickers viewModel;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_ask_tickers;
+    }
+
+    @Override
+    protected String getPageTitle() {
+        return getString(R.string.app_name);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_ask_tickers);
         binding.setHandler(this);
 
         viewModel = ViewModelProviders.of(this).get(ViewModelAskTickers.class);
