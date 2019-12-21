@@ -40,6 +40,7 @@ public class ViewModelTickerList extends ViewModel {
     }
 
     public LiveData<Integer> getDataNotification(){
+        //todo should use Rx Publish Subject instead, to avoid getting the last notification when observer is subscribing
         if (dataNotification == null)
             dataNotification = new MutableLiveData<>();
         return dataNotification;

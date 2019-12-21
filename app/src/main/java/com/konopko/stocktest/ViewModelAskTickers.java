@@ -3,6 +3,7 @@ package com.konopko.stocktest;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
@@ -14,6 +15,11 @@ import timber.log.Timber;
 public class ViewModelAskTickers extends ViewModel {
 
     private MutableLiveData<Boolean> dataNext;
+    private SavedStateHandle state; //todo use this to save the view state
+
+    public ViewModelAskTickers(SavedStateHandle savedStateHandle){
+        this.state = savedStateHandle;
+    }
 
     public LiveData<Boolean> getDataNext(){
         if (dataNext == null)

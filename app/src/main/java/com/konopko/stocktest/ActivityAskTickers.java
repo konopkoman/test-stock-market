@@ -6,7 +6,8 @@ import android.text.Spanned;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.SavedStateViewModelFactory;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.konopko.stocktest.databinding.ActivityAskTickersBinding;
 
@@ -31,7 +32,7 @@ public class ActivityAskTickers extends ActivityBase<ActivityAskTickersBinding> 
 
         binding.setHandler(this);
 
-        viewModel = ViewModelProviders.of(this).get(ViewModelAskTickers.class);
+        viewModel = new ViewModelProvider(this, new SavedStateViewModelFactory(getApplication(), this)).get(ViewModelAskTickers.class);
         viewModel.getDataNext().observe(this, open -> {
             if (open)
                 openActivityList();
