@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.konopko.stocktest.Models.ModelTickerDetails;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -16,11 +17,11 @@ public class Ticker {
     private String id;
 
     private TickerChart tickerChart;
-    private TickerDetails tickerDetails;
+    private ModelTickerDetails.Result tickerDetails;
 
     private String error;
 
-    public Ticker(@NonNull String id, @NonNull TickerDetails tickerDetails, @NonNull TickerChart tickerChart){
+    public Ticker(@NonNull String id, @NonNull ModelTickerDetails.Result tickerDetails, @NonNull TickerChart tickerChart){
         Timber.d("tickerDetails = %s", new Gson().toJson(tickerDetails));
         Timber.d("tickerChart = %s", new Gson().toJson(tickerChart));
         this.id = id;
@@ -69,7 +70,7 @@ public class Ticker {
     @Nullable
     public String getCompanyDesc(){
         try {
-            return Objects.requireNonNull(tickerDetails.summaryProfile).longBusinessSummary;
+            return Objects.requireNonNull(tickerDetails.getSummaryProfile()).longBusinessSummary;
         } catch (NullPointerException e){
             Timber.e(e);
             return null;
