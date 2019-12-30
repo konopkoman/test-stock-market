@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.konopko.stocktest.Models.ModelTickerDetails;
+import com.konopko.stocktest.model.ModelTickerChart;
+import com.konopko.stocktest.model.ModelTickerDetails;
+import com.konopko.stocktest.model.wrapper.WrapperTickerChart;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Objects;
-import java.util.TreeMap;
 
 import timber.log.Timber;
 
@@ -16,16 +20,16 @@ public class Ticker {
 
     private String id;
 
-    private TickerChart tickerChart;
-    private ModelTickerDetails.Result tickerDetails;
+    private WrapperTickerChart tickerChart;
+    private ModelTickerDetails.Result tickerDetails; //todo use wrapper
 
     private String error;
 
-    public Ticker(@NonNull String id, @NonNull ModelTickerDetails.Result tickerDetails, @NonNull TickerChart tickerChart){
+    public Ticker(@NonNull String id, @NonNull ModelTickerDetails.Result tickerDetails, @NonNull ModelTickerChart.Result tickerChart){
         Timber.d("tickerDetails = %s", new Gson().toJson(tickerDetails));
         Timber.d("tickerChart = %s", new Gson().toJson(tickerChart));
         this.id = id;
-        this.tickerChart = tickerChart;
+        this.tickerChart = new WrapperTickerChart(tickerChart);
         this.tickerDetails = tickerDetails;
 
         //fakeInit();
@@ -47,15 +51,16 @@ public class Ticker {
     }
 
     @NonNull
-    public TreeMap<Long, Float> getChartData(){
-        Timber.d("getChartData = %s", new Gson().toJson(new TreeMap<>(Collections.unmodifiableMap(tickerChart.getPoints()))));
-        return new TreeMap<>(Collections.unmodifiableMap(tickerChart.getPoints()));
+    public LinkedHashMap<Long, Float> getChartData(){
+        Timber.d("getChartData = %s", new Gson().toJson(new LinkedHashMap<>(Collections.unmodifiableMap(tickerChart.getPoints()))));
+        return new LinkedHashMap<>(Collections.unmodifiableMap(tickerChart.getPoints()));
     }
 
     @Nullable
     public Float getCurrentValue(){
         try {
-            return Objects.requireNonNull(tickerChart.getPoints().lastEntry()).getValue();
+            List<Float> values = new ArrayList<>(tickerChart.getPoints().values());
+            return Objects.requireNonNull(values).get(values.size() -1);
         } catch (NullPointerException e){
             Timber.e(e);
             return null;
@@ -70,21 +75,21 @@ public class Ticker {
     @Nullable
     public String getCompanyDesc(){
         try {
-            return Objects.requireNonNull(tickerDetails.getSummaryProfile()).longBusinessSummary;
+            return Objects.requireNonNull(tickerDetails.getSummaryProfile()).getLongBusinessSummary();
         } catch (NullPointerException e){
             Timber.e(e);
             return null;
         }
     }
 
-    private void fakeInit(){
+    /*private void fakeInit(){
         if (tickerChart == null)
             tickerChart = new TickerChart();
         tickerChart.getPoints().clear();
         tickerChart.getPoints().put((long) 1570455000, (float) 1208.25);
         tickerChart.getPoints().put((long) 1570541400, (float) 1190.13);
         tickerChart.getPoints().put((long)1570627800, (float) 1202.40);
-    }
+    }*/
 
 
 

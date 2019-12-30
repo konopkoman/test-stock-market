@@ -3,7 +3,8 @@ package com.konopko.stocktest;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.konopko.stocktest.Models.ModelTickerDetails;
+import com.konopko.stocktest.model.ModelTickerChart;
+import com.konopko.stocktest.model.ModelTickerDetails;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -65,9 +66,9 @@ public class RepositoryTicker {
         for (String tickerId : listTickers){
             disposable.add(apiService.fetchTickerDetails(tickerId).subscribeOn(Schedulers.io())
                     .zipWith(apiService.fetchTickerChart(tickerId).subscribeOn(Schedulers.io()),
-                            new BiFunction<ModelTickerDetails.Result, TickerChart, Ticker>(){
+                            new BiFunction<ModelTickerDetails.Result, ModelTickerChart.Result, Ticker>(){
                                 @Override
-                                public Ticker apply(ModelTickerDetails.Result tickerDetails, TickerChart tickerChart) throws Exception {
+                                public Ticker apply(ModelTickerDetails.Result tickerDetails, ModelTickerChart.Result tickerChart) throws Exception {
                                     Timber.d("apply");
                                     return new Ticker(tickerId, tickerDetails, tickerChart);
                                 }

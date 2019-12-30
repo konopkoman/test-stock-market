@@ -1,6 +1,7 @@
 package com.konopko.stocktest;
 
-import com.konopko.stocktest.Models.ModelTickerDetails;
+import com.konopko.stocktest.model.ModelTickerChart;
+import com.konopko.stocktest.model.ModelTickerDetails;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -14,6 +15,6 @@ public interface ApiService {
 
     // Fetch ticker chart
     @GET("stock/v2/get-chart?interval=1d&region=US&lang=en&range=1mo")
-    Single<TickerChart> fetchTickerChart(@Query("symbol") String tickerId);
+    Single<ModelTickerChart.Result> fetchTickerChart(@Query("symbol") String tickerId);
 
 }
