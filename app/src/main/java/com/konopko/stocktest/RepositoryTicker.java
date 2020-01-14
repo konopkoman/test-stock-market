@@ -19,22 +19,10 @@ import timber.log.Timber;
 
 public class RepositoryTicker {
 
-    private static RepositoryTicker self;
-
     private CompositeDisposable disposable;
 
     private LinkedHashMap<String, Ticker> mapTicker = new LinkedHashMap<>(); // map key is ticker's uid
     private BehaviorSubject<LinkedHashMap<String, Ticker>> subject = BehaviorSubject.create();
-
-    private RepositoryTicker(){
-
-    }
-
-    public static RepositoryTicker getInstance(){
-        if (self == null)
-            self = new RepositoryTicker();
-        return self;
-    }
 
     public void addTicker(@NonNull String tickerId, @Nullable Ticker ticker){
         mapTicker.put(tickerId, ticker);

@@ -11,11 +11,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 public class ViewModelTickerList extends ViewModel {
 
-    private RepositoryTicker repositoryTicker;
+    @Inject
+    RepositoryTicker repositoryTicker;
+
     private CompositeDisposable disposable = new CompositeDisposable();
     private MutableLiveData<List<AdapterTickerListHolder>> dataListTickerHolder;
     private MutableLiveData<String> dataTickerId;
@@ -23,7 +27,7 @@ public class ViewModelTickerList extends ViewModel {
 
 
     public ViewModelTickerList(){
-        repositoryTicker = RepositoryTicker.getInstance();
+        App.getComponent().inject(this);
     }
 
     @Override

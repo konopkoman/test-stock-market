@@ -10,15 +10,21 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 public class ViewModelAskTickers extends ViewModel {
+
+    @Inject
+    RepositoryTicker repositoryTicker;
 
     private MutableLiveData<Boolean> dataNext;
     private SavedStateHandle state; //todo use this to save the view state
 
     public ViewModelAskTickers(SavedStateHandle savedStateHandle){
         this.state = savedStateHandle;
+        App.getComponent().inject(this);
     }
 
     public LiveData<Boolean> getDataNext(){
@@ -36,7 +42,7 @@ public class ViewModelAskTickers extends ViewModel {
     }
 
     private void searchTickers(@NonNull List<String> tickers){
-        RepositoryTicker.getInstance().findTickers(tickers);
+        repositoryTicker.findTickers(tickers);
     }
 
 }
