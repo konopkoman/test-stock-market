@@ -7,7 +7,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [TickerModule::class])
+@Component(modules = [NetworkModule::class, TickerModule::class])
 interface AppComponent {
 
     fun inject(viewModel: ViewModelAskTickers)

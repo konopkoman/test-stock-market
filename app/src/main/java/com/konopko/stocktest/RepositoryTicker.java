@@ -9,6 +9,8 @@ import com.konopko.stocktest.model.ModelTickerDetails;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -19,10 +21,17 @@ import timber.log.Timber;
 
 public class RepositoryTicker {
 
+    private final ApiService apiService;
+
     private CompositeDisposable disposable;
 
     private LinkedHashMap<String, Ticker> mapTicker = new LinkedHashMap<>(); // map key is ticker's uid
     private BehaviorSubject<LinkedHashMap<String, Ticker>> subject = BehaviorSubject.create();
+
+    @Inject
+    public RepositoryTicker(@NonNull ApiService apiService){
+        this.apiService = apiService;
+    }
 
     public void addTicker(@NonNull String tickerId, @Nullable Ticker ticker){
         mapTicker.put(tickerId, ticker);
@@ -47,9 +56,6 @@ public class RepositoryTicker {
             mapTicker.put(tickerId, null);
         // populate data
         subject.onNext(mapTicker);
-
-        ApiService apiService = ApiClient.getClient()
-                .create(ApiService.class);
 
         for (String tickerId : listTickers){
             disposable.add(apiService.fetchTickerDetails(tickerId).subscribeOn(Schedulers.io())
