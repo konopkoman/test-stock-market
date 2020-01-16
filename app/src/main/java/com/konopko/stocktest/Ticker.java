@@ -52,8 +52,12 @@ public class Ticker {
 
     @NonNull
     public LinkedHashMap<Long, Float> getChartData(){
-        Timber.d("getChartData = %s", new Gson().toJson(new LinkedHashMap<>(Collections.unmodifiableMap(tickerChart.getPoints()))));
-        return new LinkedHashMap<>(Collections.unmodifiableMap(tickerChart.getPoints()));
+        LinkedHashMap<Long, Float> result =
+                tickerChart == null
+                ? new LinkedHashMap<>()
+                : new LinkedHashMap<>(Collections.unmodifiableMap(tickerChart.getPoints()));
+        Timber.d("getChartData = %s", new Gson().toJson(result));
+        return result;
     }
 
     @Nullable
@@ -62,7 +66,7 @@ public class Ticker {
             List<Float> values = new ArrayList<>(tickerChart.getPoints().values());
             return Objects.requireNonNull(values).get(values.size() -1);
         } catch (NullPointerException e){
-            Timber.e(e);
+            Timber.w(e);
             return null;
         }
     }
