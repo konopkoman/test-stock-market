@@ -32,7 +32,12 @@ public class Ticker {
         this.tickerChart = new WrapperTickerChart(tickerChart);
         this.tickerDetails = tickerDetails;
 
-        //fakeInit();
+        // check empty ticker
+        if (this.tickerDetails.getSummaryProfile() == null
+                || (this.tickerDetails.getSummaryProfile().getLongBusinessSummary() == null && this.tickerDetails.getSummaryProfile().getCountry() == null)
+                || this.tickerChart == null
+                || (this.tickerChart.getCurrency() == null && this.tickerChart.getPoints() == null)
+        ) error = "Empty ticker";
     }
 
     public Ticker(@NonNull String id, @NonNull String error){
@@ -64,7 +69,7 @@ public class Ticker {
     public Float getCurrentValue(){
         try {
             List<Float> values = new ArrayList<>(tickerChart.getPoints().values());
-            return Objects.requireNonNull(values).get(values.size() -1);
+            return Objects.requireNonNull(values).isEmpty() ? null : values.get(values.size() -1);
         } catch (NullPointerException e){
             Timber.w(e);
             return null;
@@ -81,7 +86,7 @@ public class Ticker {
         try {
             return Objects.requireNonNull(tickerDetails.getSummaryProfile()).getLongBusinessSummary();
         } catch (NullPointerException e){
-            Timber.e(e);
+            Timber.w(e);
             return null;
         }
     }

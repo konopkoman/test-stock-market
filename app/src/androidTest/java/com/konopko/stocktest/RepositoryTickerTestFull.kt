@@ -16,9 +16,11 @@ class RepositoryTickerTestFull {
     private val repositoryTicker: RepositoryTicker = RepositoryTicker(apiService)
 
     private val disposable: CompositeDisposable = CompositeDisposable()
-    private val listTicker: List<String> = listOf("AAPL", "FAKEID12")
+    private val listTicker: List<String> = listOf("TE", "FAKEID12")
 
+    // here +1 to list size because the first call of repository.subscribeMapTickers() is initial with no tickers
     private val lock: CountDownLatch = CountDownLatch(listTicker.size +1)
+
     private var result: Map<String, Ticker> = emptyMap()
 
     @Before
@@ -50,12 +52,25 @@ class RepositoryTickerTestFull {
         var ticker: Ticker?
 
         ticker = result.get(listTicker[0])
+        if (ticker?.error == null)
+            testTickerValid(ticker)
+        else
+            testTickerError(ticker)
+
+        ticker = result.get(listTicker[1])
+        testTickerError(ticker)
+    }
+
+    fun testTickerValid(ticker: Ticker?){
+        assertNotNull(ticker)
         Timber.d("currentValue = %f", ticker?.currentValue)
         assertNotNull(ticker?.currentValue)
         assertNotNull(ticker?.companyDesc)
         assertFalse(ticker?.chartData?.isEmpty() ?: true)
+    }
 
-        ticker = result.get(listTicker[1])
+    fun testTickerError(ticker: Ticker?){
+        assertNotNull(ticker)
         Timber.d("error = %s", ticker?.error)
         assertNotNull(ticker?.error)
         assertNull(ticker?.currentValue)

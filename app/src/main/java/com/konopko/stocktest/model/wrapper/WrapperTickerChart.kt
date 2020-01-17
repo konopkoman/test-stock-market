@@ -6,11 +6,11 @@ class WrapperTickerChart(private val model: ModelTickerChart.Result) {
 
     private val points = mutableMapOf<Long, Float>()
 
-    fun getCurrency(): String {
-        return model.chart?.result?.get(0)?.meta?.currency ?: ""
+    fun getCurrency(): String? {
+        return model.chart?.result?.get(0)?.meta?.currency
     }
 
-    fun getPoints(): Map<Long, Float> {
+    fun getPoints(): Map<Long, Float>? {
         if (!points.isEmpty())
             return points
 
@@ -21,8 +21,10 @@ class WrapperTickerChart(private val model: ModelTickerChart.Result) {
             points.put(timestamps[i], values[i])
 
         //todo sort by key
-
-        return points.toMap()
+        if (points.isEmpty())
+            return null
+        else
+            return points.toMap()
     }
 
     private fun getTimestampList(): List<Long>? {
