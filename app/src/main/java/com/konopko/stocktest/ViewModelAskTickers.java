@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
+import com.konopko.stocktest.repository.IRepositoryTicker;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import timber.log.Timber;
 public class ViewModelAskTickers extends ViewModel {
 
     @Inject
-    RepositoryTicker repositoryTicker;
+    IRepositoryTicker repositoryTicker;
 
     private MutableLiveData<Boolean> dataNext;
     private SavedStateHandle state; //todo use this to save the view state

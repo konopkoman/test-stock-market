@@ -1,6 +1,8 @@
 package com.konopko.stocktest
 
 import com.google.gson.Gson
+import com.konopko.stocktest.repository.IRepositoryTicker
+import com.konopko.stocktest.repository.RepositoryTicker
 import io.reactivex.disposables.CompositeDisposable
 import org.junit.After
 import org.junit.Assert.*
@@ -13,7 +15,7 @@ import java.util.concurrent.TimeUnit
 class RepositoryTickerTestFull {
 
     private val apiService: ApiService = ApiClient.getClient().create(ApiService::class.java)
-    private val repositoryTicker: RepositoryTicker = RepositoryTicker(apiService)
+    private val repositoryTicker: IRepositoryTicker = RepositoryTicker(apiService)
 
     private val disposable: CompositeDisposable = CompositeDisposable()
     private val listTicker: List<String> = listOf("TE", "FAKEID12")
@@ -21,7 +23,7 @@ class RepositoryTickerTestFull {
     // here +1 to list size because the first call of repository.subscribeMapTickers() is initial with no tickers
     private val lock: CountDownLatch = CountDownLatch(listTicker.size +1)
 
-    private var result: Map<String, Ticker> = emptyMap()
+    private var result: Map<String, Ticker?> = emptyMap()
 
     @Before
     fun init(){

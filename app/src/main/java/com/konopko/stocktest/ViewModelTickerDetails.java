@@ -5,12 +5,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.konopko.stocktest.repository.IRepositoryTicker;
+
 import javax.inject.Inject;
 
 public class ViewModelTickerDetails extends ViewModel {
 
     @Inject
-    RepositoryTicker repositoryTicker;
+    IRepositoryTicker repositoryTicker;
 
     private MutableLiveData<Ticker> dataTicker = new MutableLiveData<>();
 
