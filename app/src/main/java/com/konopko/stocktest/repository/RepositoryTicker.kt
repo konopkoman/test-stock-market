@@ -1,5 +1,6 @@
 package com.konopko.stocktest.repository
 
+import com.google.gson.Gson
 import com.konopko.stocktest.ApiService
 import com.konopko.stocktest.Ticker
 import com.konopko.stocktest.model.ModelTickerChart
@@ -12,6 +13,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
+import timber.log.Timber
 import javax.inject.Inject
 
 class RepositoryTicker @Inject constructor(private val apiService: ApiService): IRepositoryTicker {
@@ -24,6 +26,7 @@ class RepositoryTicker @Inject constructor(private val apiService: ApiService): 
     private fun addTicker(tickerId: String, ticker: Ticker){
         mapTicker.put(tickerId, ticker)
         subject.onNext(mapTicker.toMap())
+        Timber.d("addTicker ticker = %s", Gson().toJson(ticker))
     }
 
     override fun getTicker(tickerId: String): Ticker? {

@@ -4,9 +4,9 @@ import com.konopko.stocktest.BaseResponse
 
 object ModelTickerDetails {
 
-    data class Result(public val summaryProfile: SummaryProfile? = null): BaseResponse()
+    data class Result(val summaryProfile: SummaryProfile?): BaseResponse()
 
-    data class SummaryProfile(var website: String){
+    data class SummaryProfile(val website: String?){
         var zip: String? = null
         var sector: String? = null
         var longBusinessSummary: String? = null

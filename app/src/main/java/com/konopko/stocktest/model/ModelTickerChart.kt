@@ -4,20 +4,20 @@ import com.konopko.stocktest.BaseResponse
 
 object ModelTickerChart {
 
-    data class Result(val chart: Chart? = null): BaseResponse()
+    data class Result(val chart: Chart?): BaseResponse()
 
-    data class Chart(var result: List<ResultItem>? = null){
+    data class Chart(val result: List<ResultItem>?){
         var error: String? = null
     }
 
-    data class ResultItem(var indicators: Indicators? = null){
+    data class ResultItem(val indicators: Indicators?){
         var timestamp: List<Long>? = null
         var meta: TickerChartMeta? = null
     }
 
-    data class TickerChartMeta(var currency: String? = null)
+    data class TickerChartMeta(val currency: String?)
 
-    data class Indicators(var adjclose: List<AdjClose>? = null)
+    data class Indicators(val adjclose: List<AdjClose>?)
 
-    data class AdjClose(var adjclose: List<Float>? = null)
+    data class AdjClose(val adjclose: List<Float>?)
 }
