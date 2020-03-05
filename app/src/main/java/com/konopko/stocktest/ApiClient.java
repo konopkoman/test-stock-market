@@ -1,8 +1,9 @@
 package com.konopko.stocktest;
 
-import android.content.Context;
+import androidx.annotation.NonNull;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.konopko.stocktest.app.AppHelper;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -21,14 +22,14 @@ public class ApiClient {
     private static int REQUEST_TIMEOUT = 10;
     private static OkHttpClient okHttpClient;
 
-    public static Retrofit getClient() {
+    public static Retrofit getClient(@NonNull AppHelper helper) {
 
         if (okHttpClient == null)
-            initOkHttp(App.getInstance().getApplicationContext());
+            okHttpClient = initOkHttp(helper);
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(App.BASE_URL)
+                    .baseUrl(helper.getUrlBase())
                     .client(okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
@@ -37,7 +38,7 @@ public class ApiClient {
         return retrofit;
     }
 
-    private static void initOkHttp(final Context context) {
+    private static OkHttpClient initOkHttp(@NonNull AppHelper helper) {
         OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
@@ -55,8 +56,8 @@ public class ApiClient {
                 Request.Builder requestBuilder = original.newBuilder()
                         .addHeader("Accept", "application/json")
                         .addHeader("Content-Type", "application/json")
-                        .addHeader("x-rapidapi-host", App.HEADER_HOST)
-                        .addHeader("x-rapidapi-key", App.HEADER_API_KEY);
+                        .addHeader("x-rapidapi-host", helper.getApiHeaderHost())
+                        .addHeader("x-rapidapi-key", helper.getApiHeaderKey());
 
                 // Adding Authorization token (API Key)
                 // Requests will be denied without API key
@@ -69,6 +70,6 @@ public class ApiClient {
             }
         });
 
-        okHttpClient = httpClient.build();
+        return httpClient.build();
     }
 }

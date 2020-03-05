@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.konopko.stocktest.app.App;
 import com.konopko.stocktest.databinding.ListItemTickerBinding;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -83,7 +82,7 @@ public class AdapterTickerList extends RecyclerView.Adapter<AdapterTickerList.Ti
                 if (ticker.getError() != null)
                     binding.setTickerError(ticker.getError());
                 else {
-                    binding.setTickerCurrency(App.getCurrencySign(ticker.getCurrency()));
+                    binding.setTickerCurrency(ticker.getCurrency() == null ? null : App.Companion.getInstance().getCurrencySign(ticker.getCurrency()));
                     binding.setTickerPrice(String.format(Locale.getDefault(), "%.2f", ticker.getCurrentValue()));
                     setChart(binding.chart, ticker);
                 }

@@ -14,9 +14,8 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import timber.log.Timber
-import javax.inject.Inject
 
-class RepositoryTicker @Inject constructor(private val apiService: ApiService): IRepositoryTicker {
+class RepositoryTicker constructor(private val apiService: ApiService): IRepositoryTicker {
 
     private var disposable: CompositeDisposable = CompositeDisposable()
 
@@ -38,7 +37,6 @@ class RepositoryTicker @Inject constructor(private val apiService: ApiService): 
     }
 
     override fun findTickers(listTickers: List<String>){
-
         disposable = CompositeDisposable()
 
         mapTicker.clear()
