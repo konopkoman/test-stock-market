@@ -16,13 +16,11 @@ class ActivityAskTickers : ActivityBase<ActivityAskTickersBinding>() {
     private val TAGS_MAX_LENGTH = 30
     private lateinit var viewModel: ViewModelAskTickers
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_ask_tickers
-    }
-
-    override fun getPageTitle(): String? {
-        return getString(R.string.app_name)
-    }
+    override fun getLayoutId()
+            = R.layout.activity_ask_tickers
+    
+    override fun getPageTitle()
+            = getString(R.string.app_name)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

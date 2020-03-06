@@ -10,7 +10,7 @@ class ViewModelTickerDetails constructor() : ViewModel(), KoinComponent {
 
     private val repositoryTicker : IRepositoryTicker by inject()
 
-    val dataTicker = MutableLiveData<Ticker>()
+    val dataTicker = MutableLiveData<Ticker?>()
 
     constructor(tickerId: String): this(){
         dataTicker.value = repositoryTicker.getTicker(tickerId)

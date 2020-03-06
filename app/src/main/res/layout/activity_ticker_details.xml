@@ -26,8 +26,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".ActivityTickerDetails">
+            android:layout_height="wrap_content">
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"

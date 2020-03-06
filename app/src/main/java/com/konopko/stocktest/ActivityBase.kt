@@ -9,7 +9,7 @@ abstract class ActivityBase<T : ViewDataBinding> : AppCompatActivity() {
 
     protected lateinit var binding: T
     protected abstract fun getLayoutId(): Int
-    protected abstract fun getPageTitle(): String?
+    protected abstract fun getPageTitle(): String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
