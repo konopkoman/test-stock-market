@@ -23,7 +23,8 @@ public class FactoryMPAndroidChart {
         List<Entry> result = new ArrayList<>();
         int i = 0;
         for (Map.Entry<Long, Float> entry : ticker.getChartData().entrySet()) {
-            result.add(new Entry(i, entry.getValue()));
+            if (entry != null)
+                result.add(new Entry(i, entry.getValue()));
             ++i;
         }
         return result;

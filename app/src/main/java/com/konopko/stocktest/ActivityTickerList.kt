@@ -31,7 +31,6 @@ class ActivityTickerList : ActivityBase<ActivityTickerListBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.listTicker.isNestedScrollingEnabled = false
         binding.listTicker.adapter = adapter
 
         viewModel = ViewModelProvider(this).get(ViewModelTickerList::class.java)
