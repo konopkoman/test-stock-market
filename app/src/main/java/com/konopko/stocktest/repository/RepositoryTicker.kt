@@ -28,13 +28,11 @@ class RepositoryTicker constructor(private val apiService: ApiService): IReposit
         Timber.d("addTicker ticker = %s", Gson().toJson(ticker))
     }
 
-    override fun getTicker(tickerId: String): Ticker? {
-        return mapTicker.get(tickerId)
-    }
+    override fun getTicker(tickerId: String): Ticker?
+        = mapTicker.get(tickerId)
 
-    override fun subscribeMapTickers(): Observable<Map<String, Ticker?>> {
-        return subject
-    }
+    override fun subscribeMapTickers(): Observable<Map<String, Ticker?>>
+        = subject
 
     override fun findTickers(listTickers: List<String>){
         disposable = CompositeDisposable()

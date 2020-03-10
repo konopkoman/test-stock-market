@@ -28,11 +28,10 @@ class AdapterTickerList: RecyclerView.Adapter<AdapterTickerList.TickerViewHolder
     }
 
     override fun onBindViewHolder(holder: TickerViewHolder, position: Int) {
-        list[position].let {
-            val item = it
-            holder.bind(it)
+        list[position].apply {
+            holder.bind(this)
             holder.itemView.setOnClickListener {
-                onClickSubject.onNext(item)
+                onClickSubject.onNext(this)
             }
         }
     }
