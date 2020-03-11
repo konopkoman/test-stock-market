@@ -2,20 +2,20 @@ package com.konopko.stocktest
 
 import com.google.gson.Gson
 import com.konopko.stocktest.repository.IRepositoryTicker
-import com.konopko.stocktest.repository.RepositoryTicker
 import io.reactivex.disposables.CompositeDisposable
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import timber.log.Timber
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
-class RepositoryTickerTestFull {
+class RepositoryTickerTestFull: KoinComponent {
 
-    private val apiService: ApiService = ApiClient.getClient().create(ApiService::class.java)
-    private val repositoryTicker: IRepositoryTicker = RepositoryTicker(apiService)
+    private val repositoryTicker : IRepositoryTicker by inject()
 
     private val disposable: CompositeDisposable = CompositeDisposable()
     private val listTicker: List<String> = listOf("TE", "FAKEID12")
@@ -65,17 +65,17 @@ class RepositoryTickerTestFull {
 
     fun testTickerValid(ticker: Ticker?){
         assertNotNull(ticker)
-        Timber.d("currentValue = %f", ticker?.currentValue)
-        assertNotNull(ticker?.currentValue)
-        assertNotNull(ticker?.companyDesc)
-        assertFalse(ticker?.chartData?.isEmpty() ?: true)
+        Timber.d("currentValue = %f", ticker?.getCurrentValue())
+        assertNotNull(ticker?.getCurrentValue())
+        assertNotNull(ticker?.getCompanyDesc())
+        assertFalse(ticker?.getChartData()?.isEmpty() ?: true)
     }
 
     fun testTickerError(ticker: Ticker?){
         assertNotNull(ticker)
         Timber.d("error = %s", ticker?.error)
         assertNotNull(ticker?.error)
-        assertNull(ticker?.currentValue)
-        assertTrue(ticker?.chartData?.isEmpty() ?: false)
+        assertNull(ticker?.getCurrentValue())
+        assertTrue(ticker?.getChartData()?.isEmpty() ?: false)
     }
 }
