@@ -1,7 +1,5 @@
 package com.konopko.stocktest.model
 
-import com.konopko.stocktest.BaseResponse
-
 object ModelTickerDetails {
 
     data class Result(val summaryProfile: SummaryProfile?): BaseResponse()

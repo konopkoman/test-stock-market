@@ -1,7 +1,7 @@
 package com.konopko.stocktest.repository
 
 import com.google.gson.Gson
-import com.konopko.stocktest.ApiService
+import com.konopko.stocktest.network.ApiService
 import com.konopko.stocktest.Ticker
 import com.konopko.stocktest.model.ModelTickerChart
 import com.konopko.stocktest.model.ModelTickerDetails

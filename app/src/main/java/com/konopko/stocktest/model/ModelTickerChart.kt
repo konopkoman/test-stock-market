@@ -1,7 +1,5 @@
 package com.konopko.stocktest.model
 
-import com.konopko.stocktest.BaseResponse
-
 object ModelTickerChart {
 
     data class Result(val chart: Chart?): BaseResponse()
