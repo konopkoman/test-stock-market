@@ -13,11 +13,16 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.konopko.stocktest.databinding.ActivityTickerDetailsBinding
+import com.konopko.stocktest.ext.chart.ChartHelper
+import com.konopko.stocktest.ext.mvvm.ViewModelTickerDetailsFactory
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import timber.log.Timber
 import java.util.*
 
-class ActivityTickerDetails : ActivityBase<ActivityTickerDetailsBinding>() {
+class ActivityTickerDetails : ActivityBase<ActivityTickerDetailsBinding>(), KoinComponent {
 
+    private val chartHelper: ChartHelper by inject()
     private lateinit var viewModel: ViewModelTickerDetails
 
     companion object {
@@ -44,7 +49,7 @@ class ActivityTickerDetails : ActivityBase<ActivityTickerDetailsBinding>() {
             return
         }
 
-        viewModel = ViewModelProvider(this, ModelTickerDetailsFactory(tickerId)).get(ViewModelTickerDetails::class.java)
+        viewModel = ViewModelProvider(this, ViewModelTickerDetailsFactory(tickerId)).get(ViewModelTickerDetails::class.java)
 
         viewModel.dataTicker.observe(this, Observer { ticker: Ticker? ->
             if (ticker == null || ticker.error != null)
@@ -71,8 +76,8 @@ class ActivityTickerDetails : ActivityBase<ActivityTickerDetailsBinding>() {
         description.text = String.format("Days/%s", ticker.getCurrency())
         chart.setDescription(description)
 
-        val listDates = FactoryMPAndroidChart.getChartDataTimeDays(ticker)
-        val lineDataSet = LineDataSet(FactoryMPAndroidChart.getChartDataSetStepOne(ticker), ticker.id)
+        val listDates = chartHelper.getChartDataTimeDays(ticker)
+        val lineDataSet = LineDataSet(chartHelper.getChartDataSetStepOne(ticker), ticker.id)
         lineDataSet.color = ContextCompat.getColor(this, R.color.colorPrimary)
         lineDataSet.lineWidth = 3f
         // hide circles, use dots

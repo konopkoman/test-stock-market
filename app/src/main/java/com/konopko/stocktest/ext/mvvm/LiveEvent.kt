@@ -1,4 +1,4 @@
-package com.konopko.stocktest.ext
+package com.konopko.stocktest.ext.mvvm
 
 import androidx.annotation.MainThread
 import androidx.collection.ArraySet

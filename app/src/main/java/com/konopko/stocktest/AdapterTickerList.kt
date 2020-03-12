@@ -10,13 +10,14 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.konopko.stocktest.app.AppHelper
 import com.konopko.stocktest.databinding.ListItemTickerBinding
+import com.konopko.stocktest.ext.chart.ChartHelper
 import io.reactivex.subjects.PublishSubject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
 import java.util.*
 
-class AdapterTickerList: RecyclerView.Adapter<AdapterTickerList.TickerViewHolder>() {
+class AdapterTickerList: RecyclerView.Adapter<AdapterTickerList.TickerViewHolder>(), KoinComponent {
 
     private val onClickSubject = PublishSubject.create<AdapterTickerListHolder>()
     private var list: List<AdapterTickerListHolder> = ArrayList()
@@ -51,6 +52,7 @@ class AdapterTickerList: RecyclerView.Adapter<AdapterTickerList.TickerViewHolder
     class TickerViewHolder(val binding: ListItemTickerBinding): RecyclerView.ViewHolder(binding.root), KoinComponent {
 
         private val app : AppHelper by inject()
+        private val chartHelper: ChartHelper by inject()
         private var context: Context = binding.root.context
 
         fun bind(item: AdapterTickerListHolder) {
@@ -79,7 +81,7 @@ class AdapterTickerList: RecyclerView.Adapter<AdapterTickerList.TickerViewHolder
             chart.legend.isEnabled = false // hide legend
             chart.description = null
 
-            val lineDataSet = LineDataSet(FactoryMPAndroidChart.getChartDataSetStepOne(ticker), ticker.id)
+            val lineDataSet = LineDataSet(chartHelper.getChartDataSetStepOne(ticker), ticker.id)
             lineDataSet.color = ContextCompat.getColor(context, R.color.colorPrimary)
             lineDataSet.lineWidth = 2f
             // hide circles, use dots

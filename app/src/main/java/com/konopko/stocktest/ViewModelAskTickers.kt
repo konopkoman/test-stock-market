@@ -3,7 +3,7 @@ package com.konopko.stocktest
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.konopko.stocktest.ext.LiveEvent
+import com.konopko.stocktest.ext.mvvm.LiveEvent
 import com.konopko.stocktest.repository.IRepositoryTicker
 import org.koin.core.KoinComponent
 import org.koin.core.inject

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.konopko.stocktest.ext.LiveEvent
+import com.konopko.stocktest.ext.mvvm.LiveEvent
 import com.konopko.stocktest.repository.IRepositoryTicker
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.subscribeBy
